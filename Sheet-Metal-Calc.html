@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quote Tool</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="HC HEAT 1.PNG">
+    <link rel="icon" type="image/png" href="IMAGES/HC HEAT 1.PNG">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -55,7 +55,7 @@
         }
         
     </style>
-     <a class="navbar-brand" href="#"><img src="/IMAGES/HC Letterhead 2024-12.png" alt=""></a>
+     <a class="navbar-brand" href="#"><img src="IMAGES/HC Letterhead 2024-12.png" alt=""></a>
 </head>
 
 <body>
@@ -402,13 +402,13 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
 
-                const headerImgSrc = '/IMAGES/HC Letterhead 2024-12.png';
+                const headerImgSrc = 'IMAGES/HC Letterhead 2024-12.png';
                 const headerImg = await loadImage(headerImgSrc);
                 const imgWidth = 215;
                 const imgHeight = 40;
                 doc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
 
-                const footerImgSrc = '/IMAGES/HC-group-Footer-LH.png';
+                const footerImgSrc = 'IMAGES/HC-group-Footer-LH.png';
                 const footerImg = await loadImage(footerImgSrc);
                 const footerImgWidth = 220;
                 const footerImgHeight = 35;
@@ -486,7 +486,7 @@
     </script>
 </body>
 <footer>
-    <img src="/IMAGES/HC-group-Footer-LH.png" alt="Footer Image" width="100%" height="10">
+    <img src="IMAGES/HC-group-Footer-LH.png" alt="Footer Image" width="100%" height="10">
     <p style="text-align: center;">&copy; 2024 HC Heat Heat-Exchargers. All rights reserved.</p>
 </footer>
 
