@@ -175,7 +175,7 @@
                     <option value="878.87" data-name="SS430 2.0">SS430 2.0</option>
                     <option value="2615.40" data-name="SS304 4.5">SS304 4.5</option>
                 </select>
-                <div class="error-message" id="sheetCostError"></div>
+                    <div class="error-message" id="sheetCostError"></div>
                 <label for="paint">Add Paint:</label><input type="checkbox" id="paint" name="paint">
             </div>
         </div>
@@ -183,25 +183,13 @@
         <input type="button" value="Add Calculation" onclick="addCalculation()">
 
         <table id="calculationsTable">
-          <!--   <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Quantity</th>
-                    <th>X</th>
-                    <th>Y</th>
-                    <th>Sheet Metal</th>
-                    <th>Paint</th>
-                    <th>Total Cost</th>
-                    <th>Actions</th>
-                </tr>
-            </thead> -->
+   
             <tbody>
             </tbody>
         </table>
 
         <div id="totalCost">Total Nett Price: R0.00</div>
     </div>
-
     <script>
         let calculations = [];
 
