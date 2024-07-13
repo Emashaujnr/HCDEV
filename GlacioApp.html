@@ -580,7 +580,7 @@
                                 <option value="R410A" ${item.hvacDetails?.refrigerant === 'R410A' ? 'selected' : ''}>R410A</option>
                             </select>
                             <hr>
-                                 <button type="button" onclick="saveHvacDetails(${index})">Save Details</button>
+                                 <button type="button" onclick="saveHvacDetails(${index})">Save PRF</button>
                         </div>
                    
                     </form>
@@ -613,7 +613,7 @@
                 };
 
                 calculationItems[index].hvacDetails = hvacDetails;
-                alert('HVAC details saved!');
+                alert('PRF details saved!');
                 $('#prfModal').dialog('close');
             };
 
