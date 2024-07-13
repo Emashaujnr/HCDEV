@@ -250,7 +250,7 @@
                 SA: {
                     MT: {
                         "230V, 50Hz, 1PH": [
-                            { name: "VP-KCJ461CAL-1A30", price: 48588.99, pdf: "./1A30.pdf", details: { suction: "1/2", liquid: "3/8", discharge: "3/8", amp: "1.87Kw" } },
+                            { name: "VP-KCJ461CAL-1A30", price: 48588.99, pdf: "1A30.pdf", details: { suction: "1/2", liquid: "3/8", discharge: "3/8", amp: "1.87Kw" } },
                             { name: "VP-KCJ484CAL-2A30", price: 51666.70, pdf: "./Quotation_16__.pdf", details: { suction: "1/2", liquid: "3/8", discharge: "3/8", amp: "2.61Kw" } },
                             { name: "VP-CS10K7ME-PFZ-2A30", price: 55026.55, pdf: "./Quotation_2024-07-03 (3).pdf", details: { suction: "5/8", liquid: "3/8", discharge: "1/2", amp: "3.63Kw" } }
                         ],
@@ -702,13 +702,13 @@
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF();
 
-                    const headerImgSrc = '/IMAGES/HC Letterhead 2024-12.png';
+                    const headerImgSrc = 'HC Letterhead 2024-12.png';
                     const headerImg = await loadImage(headerImgSrc);
                     const imgWidth = 215;
                     const imgHeight = 40;
                     doc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
 
-                    const footerImgSrc = '/IMAGES/footer HC Letterhead-15.png';
+                    const footerImgSrc = 'footer HC Letterhead-15.png';
                     const footerImg = await loadImage(footerImgSrc);
                     const footerImgWidth = 210;
                     const footerImgHeight = 40;
@@ -866,7 +866,7 @@
 </body>
 
 <footer>
-    <img src="/IMAGES/footer HC Letterhead-15.png" alt="Footer Image" width="100%" height="3">
+    <img src="footer HC Letterhead-15.png" alt="Footer Image" width="100%" height="3">
     <p style="text-align: center;">&copy; 2024 HC HEAT HEAT-EXCHANGERS. All rights reserved.</p>
 </footer>
 
