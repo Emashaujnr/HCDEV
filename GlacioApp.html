@@ -579,8 +579,10 @@
                                 <option value="R134A" ${item.hvacDetails?.refrigerant === 'R134A' ? 'selected' : ''}>R134A</option>
                                 <option value="R410A" ${item.hvacDetails?.refrigerant === 'R410A' ? 'selected' : ''}>R410A</option>
                             </select>
+                            <hr>
+                                 <button type="button" onclick="saveHvacDetails(${index})">Save Details</button>
                         </div>
-                        <button type="button" onclick="saveHvacDetails(${index})">Save Details</button>
+                   
                     </form>
                 `;
                 $('#prfFormContainer').html(formHtml);
