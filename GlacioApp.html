@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Calculation and Quotation Generator</title>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.21/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <style>
         body {
             padding-bottom: 50px;
             padding-top: 25px;
             font-family: 'Open Sans', sans-serif;
-            /* Add padding to the bottom for footer */
         }
+
         .section {
             text-align: center;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .full-width-button {
             width: 100%;
             padding: 10px;
@@ -50,6 +59,7 @@
             left: 0;
             z-index: 1000;
         }
+
         .pdf-viewer {
             display: none;
             position: fixed;
@@ -63,10 +73,12 @@
             z-index: 10000;
             overflow: hidden;
         }
+
         .pdf-viewer iframe {
             width: 100%;
             height: 90%;
         }
+
         .pdf-viewer .close-btn {
             width: 100%;
             text-align: right;
@@ -75,45 +87,62 @@
             color: white;
             cursor: pointer;
         }
+
         .bom-link {
             color: blue;
             text-decoration: underline;
             cursor: pointer;
         }
+
         .bom-link:hover {
             color: darkblue;
         }
-        .ui-dialog-titlebar-close {
-            display: none;
+
+        /* Add responsive styles */
+        @media (max-width: 768px) {
+            .ui-dialog {
+                width: 95% !important;
+                left: 2.5% !important;
+            }
+
+            .ui-dialog-titlebar-close {
+                display: block !important;
+            }
+
+            .ui-dialog-titlebar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .ui-dialog-title {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
-<body>
 
-    <!-- Quotation Generator Section -->
+<body>
     <div class="Test1 section1">
-           <a class="navbar-brand" href="#"><img src="HC Letterhead 2024-12.png" alt=""></a>  
-      <form id="quotationForm">
-        
+        <a class="navbar-brand" href="#"><img src="HC Letterhead 2024-12.png" alt=""></a> 
+        <form id="quotationForm">
             <div class="form-group">
+                <h2>Client Information</h2>
                 <div class="form-group">
-                    <h2>Client Information</h2>
-                    <div class="form-group">
-                        <label for="clientName">Client Name:</label>
-                        <input type="text" id="clientName" name="clientName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientAddress">Address:</label>
-                        <input type="text" id="clientAddress" name="clientAddress" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientPhone">Phone:</label>
-                        <input type="text" id="clientPhone" name="clientPhone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientEmail">Email:</label>
-                        <input type="email" id="clientEmail" name="clientEmail" required>
-                    </div>
+                    <label for="clientName">Client Name:</label>
+                    <input type="text" id="clientName" name="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientAddress">Address:</label>
+                    <input type="text" id="clientAddress" name="clientAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Phone:</label>
+                    <input type="text" id="clientPhone" name="clientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Email:</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required>
                 </div>
             </div>
 
@@ -137,7 +166,6 @@
                     <option value="Frank Davis">Frank Davis</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="projectName">Project Name:</label>
                 <input type="text" id="projectName" name="projectName" required>
@@ -153,11 +181,10 @@
                 </select>
                 <div class="error-message" id="paymentTermError"></div>
             </div>
-            <button type="submit" id="generateQuotation" class="full-width-button">Generate Quotation</button>
+            <button type="submit" id="generateQuotationn" class="full-width-button">Generate Quotation</button>
         </form>
     </div>
 
-    <!-- Calculator Section -->
     <div class="Test1 section1">
         <h2>Price Calculation App</h2>
         <div>
@@ -202,7 +229,9 @@
         <div id="totalCost">Total Nett Price: R0.00</div>
     </div>
 
-    <div id="prfModal" title="Enter PRF Details" style="display:none;">
+    <div id="modelDetailsContainer"></div>
+
+    <div id="prfModal" title="HVAC Details">
         <div id="prfFormContainer"></div>
     </div>
 
@@ -221,78 +250,78 @@
                 SA: {
                     MT: {
                         "230V, 50Hz, 1PH": [
-                            { name: "VP-KCJ461CAL-1A30", price: 48588.99, pdf: "1A30.pdf"},
-                            { name: "VP-KCJ484CAL-2A30", price: 51666.70, pdf: "2A30.pdf" },
-                            { name: "VP-CS10K7ME-PFZ-2A30", price: 55026.55, pdf: "PFZ-2A30.pdf" }
+                            { name: "VP-KCJ461CAL-1A30", price: 48588.99, pdf: "./1A30.pdf", details: { suction: "1/2", liquid: "3/8", discharge: "3/8", amp: "1.87Kw" } },
+                            { name: "VP-KCJ484CAL-2A30", price: 51666.70, pdf: "./Quotation_16__.pdf", details: { suction: "1/2", liquid: "3/8", discharge: "3/8", amp: "2.61Kw" } },
+                            { name: "VP-CS10K7ME-PFZ-2A30", price: 55026.55, pdf: "./Quotation_2024-07-03 (3).pdf", details: { suction: "5/8", liquid: "3/8", discharge: "1/2", amp: "3.63Kw" } }
                         ],
                         "400V, 50Hz, 3PH": [
-                            { name: "VP-CS10K7ME-TFM-2A30", price: 52503.74, pdf: "./path/to/pdf4.pdf" },
-                            { name: "VP-CS13K7ME-TFM-2A35", price: 54919.95, pdf: "./path/to/pdf5.pdf" },
-                            { name: "VP-CS17K7ME-TFM-2A40", price: 55468.35, pdf: "./path/to/pdf6.pdf" },
-                            { name: "VP-CS20K7ME-TFM-3A40", price: 2200, pdf: "./path/to/pdf7.pdf" },
-                            { name: "VP-CS24K7ME-TFM-2A50", price: 60416.97, pdf: "./path/to/pdf8.pdf" },
-                            { name: "VP-CS27K7ME-TFM-2A50", price: 60920.80, pdf: "./path/to/pdf9.pdf" },
-                            { name: "VP-CS33K7ME-TFM-3A50", price: 64214.08, pdf: "./path/to/pdf10.pdf" },
-                            { name: "VP-ZB15KQE-TFD-559-2A35", price: 58030.52, pdf: "./path/to/pdf11.pdf" },
-                            { name: "VP-ZB19KQE-TFD-559-2A40", price: 59440.90, pdf: "./path/to/pdf12.pdf" },
-                            { name: "VP-ZB26KCE-TFD-559-2A50", price: 62180.99, pdf: "./path/to/pdf13.pdf" },
-                            { name: "VP-ZB38KQE-TFD-559-2A50", price: 65340.99, pdf: "./path/to/pdf14.pdf" },
-                            { name: "VP-ZB45KCE--TFD-559-3A50", price: 68572.30, pdf: "./path/to/pdf15.pdf" },
-                            { name: "VP-ZB48KQE-TFD-559-4A50", price: 77897.66, pdf: "./path/to/pdf16.pdf" },
-                            { name: "VP-ZB58KQE-TFD-559-2B50", price: 91461.56, pdf: "./path/to/pdf17.pdf" },
-                            { name: "VP-ZB66KQE-TFD-551-2B50", price: 96823.79, pdf: "./path/to/pdf18.pdf" },
-                            { name: "VP-ZB76KQE-TFD-559-3B50", price: 104200.92, pdf: "./path/to/pdf19.pdf" },
-                            { name: "VP-ZB95KQE-TFD-551-4B50", price: 126610.05, pdf: "./path/to/pdf20.pdf" }
+                            { name: "VP-CS10K7ME-TFM-2A30", price: 52503.74, pdf: "./path/to/pdf4.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VP-CS13K7ME-TFM-2A35", price: 54919.95, pdf: "./path/to/pdf5.pdf", details: { suction: "Suction detail for 2A35", liquid: "Liquid detail for 2A35", discharge: "Discharge detail for 2A35", amp: "6-10Kw" } },
+                            { name: "VP-CS17K7ME-TFM-2A40", price: 55468.35, pdf: "./path/to/pdf6.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "VP-CS20K7ME-TFM-3A40", price: 2200, pdf: "./path/to/pdf7.pdf", details: { suction: "Suction detail for 3A40", liquid: "Liquid detail for 3A40", discharge: "Discharge detail for 3A40", amp: "6-10Kw" } },
+                            { name: "VP-CS24K7ME-TFM-2A50", price: 60416.97, pdf: "./path/to/pdf8.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-CS27K7ME-TFM-2A50", price: 60920.80, pdf: "./path/to/pdf9.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-CS33K7ME-TFM-3A50", price: 64214.08, pdf: "./path/to/pdf10.pdf", details: { suction: "Suction detail for 3A50", liquid: "Liquid detail for 3A50", discharge: "Discharge detail for 3A50", amp: "6-10Kw" } },
+                            { name: "VP-ZB15KQE-TFD-559-2A35", price: 58030.52, pdf: "./path/to/pdf11.pdf", details: { suction: "Suction detail for 2A35", liquid: "Liquid detail for 2A35", discharge: "Discharge detail for 2A35", amp: "6-10Kw" } },
+                            { name: "VP-ZB19KQE-TFD-559-2A40", price: 59440.90, pdf: "./path/to/pdf12.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "VP-ZB26KCE-TFD-559-2A50", price: 62180.99, pdf: "./path/to/pdf13.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-ZB38KQE-TFD-559-2A50", price: 65340.99, pdf: "./path/to/pdf14.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-ZB45KCE--TFD-559-3A50", price: 68572.30, pdf: "./path/to/pdf15.pdf", details: { suction: "Suction detail for 3A50", liquid: "Liquid detail for 3A50", discharge: "Discharge detail for 3A50", amp: "6-10Kw" } },
+                            { name: "VP-ZB48KQE-TFD-559-4A50", price: 77897.66, pdf: "./path/to/pdf16.pdf", details: { suction: "Suction detail for 4A50", liquid: "Liquid detail for 4A50", discharge: "Discharge detail for 4A50", amp: "6-10Kw" } },
+                            { name: "VP-ZB58KQE-TFD-559-2B50", price: 91461.56, pdf: "./path/to/pdf17.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } },
+                            { name: "VP-ZB66KQE-TFD-551-2B50", price: 96823.79, pdf: "./path/to/pdf18.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } },
+                            { name: "VP-ZB76KQE-TFD-559-3B50", price: 104200.92, pdf: "./path/to/pdf19.pdf", details: { suction: "Suction detail for 3B50", liquid: "Liquid detail for 3B50", discharge: "Discharge detail for 3B50", amp: "6-10Kw" } },
+                            { name: "VP-ZB95KQE-TFD-551-4B50", price: 126610.05, pdf: "./path/to/pdf20.pdf", details: { suction: "Suction detail for 4B50", liquid: "Liquid detail for 4B50", discharge: "Discharge detail for 4B50", amp: "6-10Kw" } }
                         ]
                     },
                     LT: {
                         "230V, 50Hz, 1PH": [
-                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 50311.01, pdf: "./path/to/pdf21.pdf" }
+                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 50311.01, pdf: "./path/to/pdf21.pdf", details: { suction: "Suction detail for 1A30", liquid: "Liquid detail for 1A30", discharge: "Discharge detail for 1A30", amp: "6-10Kw" } }
                         ],
                         "400V, 50Hz, 3PH": [
-                            { name: "VPL-CS10K7ME-PFZ-2A30", price: 3000, pdf: "./path/to/pdf22.pdf" },
-                            { name: "VPL-CS13K7ME-TFM-2A30", price: 54403.31, pdf: "./path/to/pdf23.pdf" },
-                            { name: "VPL-CS24K7ME-TFM-2A35", price: 58496.09, pdf: "./path/to/pdf24.pdf" },
-                            { name: "VPL-CS27K7ME-TFM-2A35", price: 58989.07, pdf: "./path/to/pdf25.pdf" },
-                            { name: "VPL-CS33K7ME-TFM-2A40", price: 59972.71, pdf: "./path/to/pdf26.pdf" },
-                            { name: "VPL-ZF18KQE-TFD-551-2A50", price: 75124.13, pdf: "./path/to/pdf27.pdf" },
-                            { name: "VPL-ZF25KQE-TFD-551-2A50", price: 89703.05, pdf: "./path/to/pdf28.pdf" },
-                            { name: "VPL-ZF34KQE-TFD-564-2B50", price: 106836.43, pdf: "./path/to/pdf29.pdf" },
-                            { name: "VPL-ZF41KQE-TFD-564-2B50", price: 124406.58, pdf: "./path/to/pdf30.pdf" }
+                            { name: "VPL-CS10K7ME-PFZ-2A30", price: 3000, pdf: "./path/to/pdf22.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VPL-CS13K7ME-TFM-2A30", price: 54403.31, pdf: "./path/to/pdf23.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VPL-CS24K7ME-TFM-2A35", price: 58496.09, pdf: "./path/to/pdf24.pdf", details: { suction: "Suction detail for 2A35", liquid: "Liquid detail for 2A35", discharge: "Discharge detail for 2A35", amp: "6-10Kw" } },
+                            { name: "VPL-CS27K7ME-TFM-2A35", price: 58989.07, pdf: "./path/to/pdf25.pdf", details: { suction: "Suction detail for 2A35", liquid: "Liquid detail for 2A35", discharge: "Discharge detail for 2A35", amp: "6-10Kw" } },
+                            { name: "VPL-CS33K7ME-TFM-2A40", price: 59972.71, pdf: "./path/to/pdf26.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "VPL-ZF18KQE-TFD-551-2A50", price: 75124.13, pdf: "./path/to/pdf27.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VPL-ZF25KQE-TFD-551-2A50", price: 89703.05, pdf: "./path/to/pdf28.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VPL-ZF34KQE-TFD-564-2B50", price: 106836.43, pdf: "./path/to/pdf29.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } },
+                            { name: "VPL-ZF41KQE-TFD-564-2B50", price: 124406.58, pdf: "./path/to/pdf30.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } }
                         ]
                     }
                 },
                 HA: {
                     MT: {
                         "230V, 50Hz, 1PH": [
-                            { name: "VP-KCJ461CAL-2A30", price: 51513.32, pdf: "./path/to/pdf31.pdf" },
-                            { name: "VP-KCJ484CAL-2A30", price: 52246.99, pdf: "./path/to/pdf32.pdf" },
-                            { name: "VP-CS10K7ME-PFZ-2A40", price: 55792.62, pdf: "./path/to/pdf33.pdf" },
-                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 0.00, pdf: "./path/to/pdf34.pdf" }
+                            { name: "VP-KCJ461CAL-2A30", price: 51513.32, pdf: "./path/to/pdf31.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VP-KCJ484CAL-2A30", price: 52246.99, pdf: "./path/to/pdf32.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VP-CS10K7ME-PFZ-2A40", price: 55792.62, pdf: "./path/to/pdf33.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 0.00, pdf: "./path/to/pdf34.pdf", details: { suction: "Suction detail for 1A30", liquid: "Liquid detail for 1A30", discharge: "Discharge detail for 1A30", amp: "6-10Kw" } }
                         ],
                         "400V, 50Hz, 3PH": [
-                            { name: "VP-CS10K7ME-TFM-2A40", price: 51165.32, pdf: "./path/to/pdf35.pdf" },
-                            { name: "VP-CS13K7ME-TFM-2A50", price: 54730.03, pdf: "./path/to/pdf36.pdf" },
-                            { name: "VP-CS17K7ME-TFM-2A50", price: 55011.84, pdf: "./path/to/pdf37.pdf" },
-                            { name: "VP-CS20K7ME-TFM-2A50", price: 55400.02, pdf: "./path/to/pdf38.pdf" },
-                            { name: "VP-CS24K7ME-TFM-3A50", price: 63354.29, pdf: "./path/to/pdf39.pdf" },
-                            { name: "VP-CS27K7ME-TFM-3A50", price: 63847.28, pdf: "./path/to/pdf40.pdf" },
-                            { name: "VP-CS33K7ME-TFM-2B50", price: 78432.88, pdf: "./path/to/pdf41.pdf" }
+                            { name: "VP-CS10K7ME-TFM-2A40", price: 51165.32, pdf: "./path/to/pdf35.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "VP-CS13K7ME-TFM-2A50", price: 54730.03, pdf: "./path/to/pdf36.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-CS17K7ME-TFM-2A50", price: 55011.84, pdf: "./path/to/pdf37.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-CS20K7ME-TFM-2A50", price: 55400.02, pdf: "./path/to/pdf38.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "VP-CS24K7ME-TFM-3A50", price: 63354.29, pdf: "./path/to/pdf39.pdf", details: { suction: "Suction detail for 3A50", liquid: "Liquid detail for 3A50", discharge: "Discharge detail for 3A50", amp: "6-10Kw" } },
+                            { name: "VP-CS27K7ME-TFM-3A50", price: 63847.28, pdf: "./path/to/pdf40.pdf", details: { suction: "Suction detail for 3A50", liquid: "Liquid detail for 3A50", discharge: "Discharge detail for 3A50", amp: "6-10Kw" } },
+                            { name: "VP-CS33K7ME-TFM-2B50", price: 78432.88, pdf: "./path/to/pdf41.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } }
                         ]
                     },
                     LT: {
                         "230V, 50Hz, 1PH": [
-                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 5004.14, pdf: "./path/to/pdf42.pdf" }
+                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 5004.14, pdf: "./path/to/pdf42.pdf", details: { suction: "Suction detail for 1A30", liquid: "Liquid detail for 1A30", discharge: "Discharge detail for 1A30", amp: "6-10Kw" } }
                         ],
                         "400V, 50Hz, 3PH": [
-                            { name: "VPL-CS13K7ME-TFM-2A30", price: 52281.66, pdf: "./path/to/pdf43.pdf" },
-                            { name: "VPL-CS24K7ME-TFM-2A30", price: 57979.45, pdf: "./path/to/pdf44.pdf" },
-                            { name: "VPL-CS27K7ME-TFM-2A35", price: 58989.07, pdf: "./path/to/pdf45.pdf" },
-                            { name: "VPL-CS33K7ME-TFM-2A40", price: 59972.71, pdf: "./path/to/pdf46.pdf" },
-                            { name: "HCHD ZF18K4E 2A50", price: 87856.34, pdf: "./path/to/pdf47.pdf" },
-                            { name: "HCHD ZF25K4E 2 A 50", price: 90145.16, pdf: "./path/to/pdf48.pdf" },
-                            { name: "HCHD ZF34K5E 2 B 50", price: 118925.98, pdf: "./path/to/pdf49.pdf" },
-                            { name: "HCHD ZF41K5E 3 B 50", price: 123521.48, pdf: "./path/to/pdf50.pdf" }
+                            { name: "VPL-CS13K7ME-TFM-2A30", price: 52281.66, pdf: "./path/to/pdf43.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VPL-CS24K7ME-TFM-2A30", price: 57979.45, pdf: "./path/to/pdf44.pdf", details: { suction: "Suction detail for 2A30", liquid: "Liquid detail for 2A30", discharge: "Discharge detail for 2A30", amp: "6-10Kw" } },
+                            { name: "VPL-CS27K7ME-TFM-2A35", price: 58989.07, pdf: "./path/to/pdf45.pdf", details: { suction: "Suction detail for 2A35", liquid: "Liquid detail for 2A35", discharge: "Discharge detail for 2A35", amp: "6-10Kw" } },
+                            { name: "VPL-CS33K7ME-TFM-2A40", price: 59972.71, pdf: "./path/to/pdf46.pdf", details: { suction: "Suction detail for 2A40", liquid: "Liquid detail for 2A40", discharge: "Discharge detail for 2A40", amp: "6-10Kw" } },
+                            { name: "HCHD ZF18K4E 2A50", price: 87856.34, pdf: "./path/to/pdf47.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "HCHD ZF25K4E 2 A 50", price: 90145.16, pdf: "./path/to/pdf48.pdf", details: { suction: "Suction detail for 2A50", liquid: "Liquid detail for 2A50", discharge: "Discharge detail for 2A50", amp: "6-10Kw" } },
+                            { name: "HCHD ZF34K5E 2 B 50", price: 118925.98, pdf: "./path/to/pdf49.pdf", details: { suction: "Suction detail for 2B50", liquid: "Liquid detail for 2B50", discharge: "Discharge detail for 2B50", amp: "6-10Kw" } },
+                            { name: "HCHD ZF41K5E 3 B 50", price: 123521.48, pdf: "./path/to/pdf50.pdf", details: { suction: "Suction detail for 3B50", liquid: "Liquid detail for 3B50", discharge: "Discharge detail for 3B50", amp: "6-10Kw" } }
                         ]
                     }
                 }
@@ -303,7 +332,7 @@
                 dropdown.empty();
                 dropdown.append('<option value="">Select</option>');
                 options.forEach(option => {
-                    dropdown.append(`<option value="${option.value}" data-price="${option.price || ''}" data-pdf="${option.pdf || ''}">${option.text}</option>`);
+                    dropdown.append(`<option value="${option.value}" data-price="${option.price || ''}" data-pdf="${option.pdf || ''}" data-details='${JSON.stringify(option.details || {})}'>${option.text}</option>`);
                 });
             }
 
@@ -350,7 +379,8 @@
                         value: model.name,
                         text: model.name,
                         price: model.price,
-                        pdf: model.pdf
+                        pdf: model.pdf,
+                        details: model.details
                     })));
                 } else {
                     $('#modelSelection').empty();
@@ -367,6 +397,7 @@
                 const ambientType = $('#ambientType').val();
                 const phaseType = $('#phaseType').val();
                 const pdf = modelSelection.data('pdf');
+                const details = JSON.parse(modelSelection.attr('data-details'));
 
                 if (model && price && quantity) {
                     const totalPrice = price * quantity;
@@ -378,6 +409,7 @@
                         unit: 'unit',
                         total: totalPrice.toFixed(2),
                         pdf: pdf,
+                        details: details,
                         hvacDetails: null
                     };
                     calculationItems.push(item);
@@ -397,7 +429,7 @@
 
                 calculationItems.forEach((item, index) => {
                     const row = `
-                     <tr>
+                          <tr>
                         </tr>
                         <tr>
                             <td>${index + 1}</td>
@@ -433,15 +465,6 @@
                 $('#totalCost').html(`Total Nett Price: R${totalCost}`);
             }
 
-            function previewCalculation(index) {
-                const item = calculationItems[index];
-                alert(`Preview:
-                    Model: ${item.title}
-                    Price: ${item.price}
-                    Quantity: ${item.quantity}
-                    Total: R${item.total}`);
-            }
-
             $('#calculationsTable').on('click', '.edit-calculation', function () {
                 const index = $(this).data('index');
                 const item = calculationItems[index];
@@ -462,6 +485,7 @@
                 const ambientType = $('#ambientType').val();
                 const phaseType = $('#phaseType').val();
                 const pdf = $('#modelSelection option:selected').data('pdf');
+                const details = JSON.parse($('#modelSelection option:selected').attr('data-details'));
 
                 calculationItems[index] = {
                     title: model,
@@ -471,6 +495,7 @@
                     unit: 'unit',
                     total: total,
                     pdf: pdf,
+                    details: details,
                     hvacDetails: calculationItems[index].hvacDetails
                 };
 
@@ -504,7 +529,7 @@
                             <label for="system-name-${index}">System Name</label>
                             <input type="text" id="system-name-${index}" name="system-name" value="${item.hvacDetails?.systemName || ''}">
 
-                            <label for="application-${index}">Application (LT - MT - HT)</label>
+                            <label for="application-${index}">Application Type</label>
                             <input type="text" id="application-${index}" name="application" value="${item.hvacDetails?.application || ''}">
 
                             <label for="t-evap-${index}">T EVAP (°C)</label>
@@ -515,62 +540,61 @@
 
                             <label for="ref-capacity-${index}">Refrigeration Capacity (KWR)</label>
                             <input type="text" id="ref-capacity-${index}" name="ref-capacity" value="${item.hvacDetails?.refCapacity || ''}">
-                         
 
-                           
-                                 <h3>Rack Frame Selections</h3>
-                                <label for="frame-model-${index}">Frame Model Selection (SS/GAL)</label>
-                                <select id="frame-model-${index}" name="frame-model">
-                                    <option value="">Select</option>
-                                    <option value="ss" ${item.hvacDetails?.frameModel === 'ss' ? 'selected' : ''}>SS</option>
-                                    <option value="gal" ${item.hvacDetails?.frameModel === 'gal' ? 'selected' : ''}>GAL</option>
-                                </select>
+                            <h3>Rack Frame Selections</h3>
+                            <label for="frame-model-${index}">Sheet Metal Type (SS/GAL/AL)</label>
+                            <select id="frame-model-${index}" name="frame-model">
+                                <option value="">Select</option>
+                                <option value="SS" ${item.hvacDetails?.frameModel === 'SS' ? 'selected' : ''}>SS</option>
+                                <option value="Gal" ${item.hvacDetails?.frameModel === 'Gal' ? 'selected' : ''}>GAL</option>
+                                <option value="AL" ${item.hvacDetails?.frameModel === 'AL' ? 'selected' : ''}>AL</option>
+                            </select>
 
-                                <label for="frame-type-${index}">Single SS or Galv or Double</label>
-                                <select id="frame-type-${index}" name="frame-type">
-                                    <option value="">Select</option>
-                                    <option value="single-ss" ${item.hvacDetails?.frameType === 'single-ss' ? 'selected' : ''}>Single SS</option>
-                                    <option value="single-galv" ${item.hvacDetails?.frameType === 'single-galv' ? 'selected' : ''}>Single Galv</option>
-                                    <option value="double" ${item.hvacDetails?.frameType === 'double' ? 'selected' : ''}>Double</option>
-                                </select>
+                            <label for="frame-type-${index}">Frame Model Selection Galv or Double</label>
+                            <select id="frame-type-${index}" name="frame-type">
+                                <option value="">Select</option>
+                                <option value="Single-SS" ${item.hvacDetails?.frameType === 'Single-SS' ? 'selected' : ''}>Single SS</option>
+                                <option value="Single-Galv" ${item.hvacDetails?.frameType === 'Single-Galv' ? 'selected' : ''}>Single Galv</option>
+                                <option value="Double" ${item.hvacDetails?.frameType === 'Double' ? 'selected' : ''}>Double</option>
+                            </select>
 
-                                <label for="compressor-selection-${index}">Compressor Selection</label>
-                                <select id="compressor-selection-${index}" name="compressor-selection">
-                                    <option value="">Select</option>
-                                    <option value="bitzer" ${item.hvacDetails?.compressorSelection === 'bitzer' ? 'selected' : ''}>Bitzer</option>
-                                    <option value="copeland" ${item.hvacDetails?.compressorSelection === 'copeland' ? 'selected' : ''}>Copeland</option>
-                                </select>
+                            <label for="compressor-selection-${index}">Compressor Selection</label>
+                            <select id="compressor-selection-${index}" name="compressor-selection">
+                                <option value="">Select</option>
+                                <option value="Bitzer" ${item.hvacDetails?.compressorSelection === 'Bitzer' ? 'selected' : ''}>Bitzer</option>
+                                <option value="Copeland" ${item.hvacDetails?.compressorSelection === 'Copeland' ? 'selected' : ''}>Copeland</option>
+                            </select>
 
-                                <label for="condenser-selection-${index}">Condenser Selection</label>
-                                <select id="condenser-selection-${index}" name="condenser-selection">
-                                    <option value="">Select</option>
-                                    <option value="cond-1" ${item.hvacDetails?.condenserSelection === 'cond-1' ? 'selected' : ''}>Condenser 1</option>
-                                    <option value="cond-2" ${item.hvacDetails?.condenserSelection === 'cond-2' ? 'selected' : ''}>Condenser 2</option>
-                                </select>
+                            <label for="condenser-selection-${index}">Condenser Selection</label>
+                            <select id="condenser-selection-${index}" name="condenser-selection">
+                                <option value="">Select</option>
+                                <option value="1A30" ${item.hvacDetails?.condenserSelection === 'cond-1' ? 'selected' : ''}>1A30</option>
+                                <option value="1A35" ${item.hvacDetails?.condenserSelection === 'cond-2' ? 'selected' : ''}>1A35</option>
+                            </select>
 
-                                <label for="refrigerant-${index}">Refrigerant</label>
-                                <select id="refrigerant-${index}" name="refrigerant">
-                                    <option value="">Select</option>
-                                    <option value="r134a" ${item.hvacDetails?.refrigerant === 'r134a' ? 'selected' : ''}>R134a</option>
-                                    <option value="r410a" ${item.hvacDetails?.refrigerant === 'r410a' ? 'selected' : ''}>R410a</option>
-                                </select>
-                            </div>
-                            <button type="button" onclick="saveHvacDetails(${index})">Save Details</button>
-                        </form>
+                            <label for="refrigerant-${index}">Refrigerant</label>
+                            <select id="refrigerant-${index}" name="refrigerant">
+                                <option value="">Select</option>
+                                <option value="R134A" ${item.hvacDetails?.refrigerant === 'R134A' ? 'selected' : ''}>R134A</option>
+                                <option value="R410A" ${item.hvacDetails?.refrigerant === 'R410A' ? 'selected' : ''}>R410A</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="saveHvacDetails(${index})">Save Details</button>
+                    </form>
                 `;
                 $('#prfFormContainer').html(formHtml);
                 $('#prfModal').dialog({
                     modal: true,
-                    width: 600,
-                    height: 400,
+                    width: '95%',
+                    height: 'auto',
                     resizable: true,
-                    close: function() {
+                    close: function () {
                         $('#prfFormContainer').empty();
                     }
                 });
             });
 
-            window.saveHvacDetails = function(index) {
+            window.saveHvacDetails = function (index) {
                 const form = $(`#hvacForm-${index}`);
                 const hvacDetails = {
                     systemName: form.find(`#system-name-${index}`).val(),
@@ -592,7 +616,7 @@
 
             $('#quotationForm').on('submit', function (event) {
                 event.preventDefault();
-                generateQuotation();
+                generateQuotationn();
             });
 
             async function loadImage(src) {
@@ -604,7 +628,7 @@
                 });
             }
 
-            async function generateQuotation() {
+            async function generateQuotationn() {
                 try {
                     const form = document.getElementById('quotationForm');
                     const formData = new FormData(form);
@@ -639,7 +663,7 @@
                         total += parseFloat(item.total);
                     });
 
-                    const vat = (total * 0.15).toFixed(2); // Adjusted VAT calculation to 15%
+                    const vat = (total * 0.15).toFixed(2);
                     const subTotal = (total - vat).toFixed(2);
 
                     const quotationData = {
@@ -661,9 +685,9 @@
                             ],
                             table: items,
                             additionalRows: [
-                             { col1: 'SubTotal', col2: 'R'+subTotal },   
-                             { col1: 'VAT 15%', col2: 'R'+ vat },
-                             { col1: 'Total', col2: 'R'+ total.toFixed(2) },
+                                { col1: 'SubTotal', col2: 'R' + subTotal },
+                                { col1: 'VAT 15%', col2: 'R' + vat },
+                                { col1: 'Total', col2: 'R' + total.toFixed(2) },
                             ],
                             qtnDescLabel: "Selection Note",
                             qtnDesc: "This is Property of HC Heat. There isn't anything embarrassing hidden in the middle of text."
@@ -678,15 +702,13 @@
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF();
 
-                    // Load and add header image
-                    const headerImgSrc = 'IMAGES/HC Letterhead 2024-12.png';
+                    const headerImgSrc = '/IMAGES/HC Letterhead 2024-12.png';
                     const headerImg = await loadImage(headerImgSrc);
                     const imgWidth = 215;
                     const imgHeight = 40;
                     doc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
 
-                    // Load and add footer image
-                    const footerImgSrc = 'IMAGES/footer HC Letterhead-15.png';
+                    const footerImgSrc = '/IMAGES/footer HC Letterhead-15.png';
                     const footerImg = await loadImage(footerImgSrc);
                     const footerImgWidth = 210;
                     const footerImgHeight = 40;
@@ -694,7 +716,6 @@
                     const footerImgY = doc.internal.pageSize.height - footerImgHeight;
                     doc.addImage(footerImg, 'PNG', footerImgX, footerImgY, footerImgWidth, footerImgHeight);
 
-                    // Add text to the PDF
                     doc.setFontSize(11);
                     doc.text(`Project: ${quotationData.project}`, 140, 50);
                     doc.text(`Payment Term: ${quotationData.paymentTerm}`, 140, 55);
@@ -714,7 +735,6 @@
                     doc.setFontSize(9);
                     doc.text("We thank you for your enquiry and have pleasure in quoting as follows for your consideration:", 35, 81);
 
-                    // Add table data with pagination for every 15 items
                     let itemsToPrint = [...quotationData.quotation.table];
                     while (itemsToPrint.length > 0) {
                         doc.autoTable({
@@ -738,68 +758,86 @@
 
                     doc.setFontSize(8);
                     const deliveryText = `
-       Delivery : 1: Net ex works                                    
-        2: Anticipated Delivery: 6 Working Weeks From Receipt of Order.
-        3: Delivery time quoted is an indication only, subject to work load at time of receipt of order.
-        Third Party Inspections : Third Party Inspection to your account.
-        General: We thank you for the above enquiry, Should you have any queries please do not hesitate to contact the undersigned.
-        When placing order please reference our quotation number.
-        The Quotation is created on a computer and is valid without the signature and stamp.
-        
-        Bank : Standard Bank, Branch : Melville - 006105, Ac. No : 401030741, SWIFT CODE SBZAZAJJ.
-                   
-        N.B. -This Quotation is subject to RAMSA Standard Terms & Conditions. A copy is available on request
-             -Prices quoted exclude all Taxes, VAT, Duties and/or Levies.
-             -This Quote is valid to drawing or sample quoted. Any changes will be requoted
-             - The equipment offered Is manufactured to HC HEAT-EXCHANGERS (PTY) LTD Standards and may not comply with Purchaser's
-                specification ...'
-        * PLEASE NOTE - A MINIMUM 10% CANCELLATION FEE WILL BE CHARGED ON ORDERS THAT ARE CANCELLED PRIOR TO PRODUCTION
-                 `;
+                        Delivery: 1: Net ex works                                    
+                        2: Anticipated Delivery: 6 Working Weeks From Receipt of Order.
+                        3: Delivery time quoted is an indication only, subject to work load at time of receipt of order.
+                        Third Party Inspections: Third Party Inspection to your account.
+                        General: We thank you for the above enquiry. Should you have any queries please do not hesitate to contact the undersigned.
+                        When placing an order, please reference our quotation number.
+                        The Quotation is created on a computer and is valid without the signature and stamp.
+                        
+                        Bank: Standard Bank, Branch: Melville - 006105, Ac. No: 401030741, SWIFT CODE SBZAZAJJ.
+                        
+                        N.B. -This Quotation is subject to SA Standard Terms & Conditions. A copy is available on request.
+                        -Prices quoted exclude all Taxes, VAT, Duties and/or Levies.
+                        -This Quote is valid to drawing or sample quoted. Any changes will be re-quoted.
+                        -The equipment offered is manufactured to HC HEAT-EXCHANGERS (PTY) LTD Standards and may not comply with Purchaser's specification.
+                        *PLEASE NOTE - A MINIMUM 10% CANCELLATION FEE WILL BE CHARGED ON ORDERS THAT ARE CANCELLED PRIOR TO PRODUCTION.
+                    `;
                     doc.text(deliveryText, 10, finalY + 30);
 
                     doc.text(quotationData.footer.text, 10, doc.internal.pageSize.height - 20);
 
-                    // Generate file name for the PDF
                     const currentDate = new Date().toISOString().slice(0, 10);
                     const clientName = formData.get('clientName').replace(/\s+/g, '_');
                     const fileName = `Q_${salesRepId}_${clientName}_${quotationDate}_${quotationData.quotation.num}.pdf`;
 
-                    // Save the PDF file
                     doc.save(fileName);
 
-                    // Generate the PRF PDF
                     const prfDoc = new jsPDF();
 
-                    prfDoc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
-                    prfDoc.setFontSize(16);
-                    prfDoc.text("Production Requirements Form", 10, 50);
+                    const addHeader = (doc, headerImg, headerTitle, pageNumber) => {
+                        doc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
+                        doc.setFontSize(12);
+                        doc.text(headerTitle, 10, 50);
+                        doc.setFontSize(10);
+                        doc.text(`Page: ${pageNumber}`, 180, 290);
+                        doc.line(10, 55, 200, 55); // Add a horizontal line
+                    };
+
+                    let pageNumber = 1;
+                    addHeader(prfDoc, headerImg, "Production Requirements Form", pageNumber);
 
                     calculationItems.forEach((item, index) => {
-                        prfDoc.addPage();
-                        prfDoc.setFontSize(12);
-                        prfDoc.text(`Model: ${item.title}`, 10, 10);
-                        prfDoc.text(`System Name: ${item.hvacDetails.systemName}`, 10, 20);
-                        prfDoc.text(`Application: ${item.hvacDetails.application}`, 10, 30);
-                        prfDoc.text(`T EVAP: ${item.hvacDetails.tEvap} °C`, 10, 40);
-                        prfDoc.text(`TDI EVAP: ${item.hvacDetails.tdiEvap} °C`, 10, 50);
-                        prfDoc.text(`Refrigeration Capacity: ${item.hvacDetails.refCapacity} KWR`, 10, 60);
-                        prfDoc.text(`Frame Model: ${item.hvacDetails.frameModel}`, 10, 70);
-                        prfDoc.text(`Frame Type: ${item.hvacDetails.frameType}`, 10, 80);
-                        prfDoc.text(`Compressor Selection: ${item.hvacDetails.compressorSelection}`, 10, 90);
-                        prfDoc.text(`Condenser Selection: ${item.hvacDetails.condenserSelection}`, 10, 100);
-                        prfDoc.text(`Refrigerant: ${item.hvacDetails.refrigerant}`, 10, 110);
+                        if (index > 0) {
+                            prfDoc.addPage();
+                            pageNumber++;
+                            addHeader(prfDoc, headerImg, "Production Requirements Form", pageNumber);
+                        }
+
+                        prfDoc.setFontSize(11);
+                        prfDoc.text(`Model: ${item.title}`, 10, 60);
+                        prfDoc.text(`System Name: ${item.hvacDetails.systemName}`, 10, 70);
+                        prfDoc.text(`Application: ${item.hvacDetails.application}`, 10, 80);
+                        prfDoc.text(`T EVAP: ${item.hvacDetails.tEvap} °C`, 10, 90);
+                        prfDoc.text(`TDI EVAP: ${item.hvacDetails.tdiEvap} °C`, 10, 100);
+                        prfDoc.text(`Refrigeration Capacity: ${item.hvacDetails.refCapacity} KWR`, 10, 110);
+                        prfDoc.text(`Frame Model: ${item.hvacDetails.frameModel}`, 10, 120);
+                        prfDoc.text(`Frame Type: ${item.hvacDetails.frameType}`, 10, 130);
+                        prfDoc.text(`Compressor Selection: ${item.hvacDetails.compressorSelection}`, 10, 140);
+                        prfDoc.text(`Condenser Selection: ${item.hvacDetails.condenserSelection}`, 10, 150);
+                        prfDoc.text(`Refrigerant: ${item.hvacDetails.refrigerant}`, 10, 160);
+                        prfDoc.line(10, 165, 200, 165); // Add a horizontal line
+                        prfDoc.setFontSize(11);
+                        prfDoc.text(`Suction Line Master: ${item.details.suction}`, 10, 175);
+                        prfDoc.text(`Liquid Line Master: ${item.details.liquid}`, 10, 185);
+                        prfDoc.text(`Discharge Line Master: ${item.details.discharge}`, 10, 195);
+                        prfDoc.text(`Amps: ${item.details.amp}`, 10, 205);
+                        prfDoc.setFontSize(8);
+                        prfDoc.text(`Quote File Path: ${fileName}`, 95, 50);
 
                         const compressorInfo = item.hvacDetails.compressorInfo;
                         if (compressorInfo) {
                             prfDoc.addPage();
-                            prfDoc.setFontSize(14);
-                            prfDoc.text("Compressor Details", 10, 10);
+                            pageNumber++;
+                            addHeader(prfDoc, headerImg, "Compressor Details", pageNumber);
+
                             compressorInfo.forEach(info => {
-                                prfDoc.text(`Item: ${info.item}`, 10, 20);
-                                prfDoc.text(`Description: ${info.description}`, 10, 30);
-                                prfDoc.text(`Quantity: ${info.qty}`, 10, 40);
-                                prfDoc.text(`Section: ${info.section}`, 10, 50);
-                                prfDoc.text(`Type: ${info.type}`, 10, 60);
+                                prfDoc.text(`Item: ${info.item}`, 10, 60);
+                                prfDoc.text(`Description: ${info.description}`, 10, 70);
+                                prfDoc.text(`Quantity: ${info.qty}`, 10, 80);
+                                prfDoc.text(`Section: ${info.section}`, 10, 90);
+                                prfDoc.text(`Type: ${info.type}`, 10, 100);
                             });
                         }
                     });
@@ -813,14 +851,12 @@
                 }
             }
 
-            // Open PDF viewer
             $('#openPdfViewer').on('click', function () {
-                const pdfSrc = '/BOM'; // Update with your PDF path
+                const pdfSrc = '/BOM';
                 $('#pdfFrame').attr('src', pdfSrc);
                 $('#pdfViewer').show();
             });
 
-            // Close PDF viewer
             $('#closePdfViewer').on('click', function () {
                 $('#pdfViewer').hide();
                 $('#pdfFrame').attr('src', '');
@@ -828,8 +864,10 @@
         });
     </script>
 </body>
+
 <footer>
-    <img src="footer HC Letterhead-15.png" alt="Footer Image" width="100%" height="3">
+    <img src="/IMAGES/footer HC Letterhead-15.png" alt="Footer Image" width="100%" height="3">
     <p style="text-align: center;">&copy; 2024 HC HEAT HEAT-EXCHANGERS. All rights reserved.</p>
 </footer>
+
 </html>
