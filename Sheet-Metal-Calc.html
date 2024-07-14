@@ -10,60 +10,61 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
     <style>
-            body {
+        body {
             padding-bottom: 50px;
             padding-top: 25px;
             font-family: 'Open Sans', sans-serif;
         }
+
         .error {
             border: 1px solid red;
         }
+
         .error-message {
             color: red;
             font-size: 0.9em;
         }
+
         .full-width-button {
             width: 100%;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
         }
+
         .full-width-button:hover {
             background-color: #2f312f;
         }
+
         .underline-text {
             text-decoration: underline;
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
         }
+
         footer {
-            
             bottom: 0;
             width: 100%;
             text-align: center;
-            
-            
         }
-        
     </style>
-   
+
 </head>
 
 <body>
     <!-- Quotation Generator Section -->
     <div class="Test1 section1">
-          <a class="navbar-brand" href="index.html"><img src="HC Letterhead 2024-12.png" alt=""></a>
+        <a class="navbar-brand" href="index.html"><img src="HC Letterhead 2024-12.png" alt=""></a>
         <form id="quotationForm">
-           
             <div class="form-group">
                 <div class="form-group">
                     <h2>Client Information</h2>
@@ -141,7 +142,7 @@
                 <input type="number" id="qty" name="qty" required><br>
                 <div class="error-message" id="qtyError"></div>
             </div>
-            <div >
+            <div>
                 <label for="x">X:</label><br>
                 <input type="number" id="x" name="x" required><br>
                 <div class="error-message" id="xError"></div>
@@ -151,7 +152,7 @@
                 <input type="number" id="y" name="y" required><br>
                 <div class="error-message" id="yError"></div>
             </div>
-            <div >
+            <div>
                 <label for="sheetCost">Sheet Metal:</label><br>
                 <select id="sheetCost" name="sheetCost" required>
                     <option value="0" data-name=""></option>
@@ -176,7 +177,7 @@
                     <option value="878.87" data-name="SS430 2.0">SS430 2.0</option>
                     <option value="2615.40" data-name="SS304 4.5">SS304 4.5</option>
                 </select>
-                    <div class="error-message" id="sheetCostError"></div>
+                <div class="error-message" id="sheetCostError"></div>
                 <label for="paint">Add Paint:</label><input type="checkbox" id="paint" name="paint">
             </div>
         </div>
@@ -184,7 +185,6 @@
         <input type="button" value="Add Calculation" onclick="addCalculation()">
 
         <table id="calculationsTable">
-   
             <tbody>
             </tbody>
         </table>
@@ -234,43 +234,35 @@
             calculations.forEach((calc, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-              <tr>
-    ${index + 1}
-</tr>
-<hr>
-<tr>
-    Quantity: ${calc.qty}
-</tr>
-<hr>
-<tr>
-    X: ${calc.x}
-</tr>
-<hr.
-<tr>
-    Y: ${calc.y}
-</tr>
-<hr>
-<tr>
-    Sheet Name: ${calc.sheetCostName}
-</tr>
-<hr>
-<tr>
-    Paint: ${calc.paint ? 'Yes' : 'No'}
-</tr>
-<hr>
-<tr>
-    Total Cost: R${calc.totalCost}
-</tr>
-<hr>
-<tr>
-    <button class="edit-calculation" data-index="${index}">Edit</button>
-    <button class="delete-calculation" data-index="${index}">Delete</button>
-    <button class="preview-calculation" onclick="previewCalculation(${index})">Preview</button>
-</tr>
-
-             
+                <td>${index + 1}</td>
+                <td>Quantity: ${calc.qty}</td>
+                <td>X: ${calc.x}</td>
+                <td>Y: ${calc.y}</td>
+                <td>Sheet Name: ${calc.sheetCostName}</td>
+                <td>Paint: ${calc.paint ? 'Yes' : 'No'}</td>
+                <td>Total Cost: R${calc.totalCost}</td>
+                <td>
+                    <button class="edit-calculation" data-index="${index}">Edit</button>
+                    <button class="delete-calculation" data-index="${index}">Delete</button>
+                    <button class="preview-calculation" onclick="previewCalculation(${index})">Preview</button>
+                </td>
                 `;
                 tableBody.appendChild(row);
+            });
+
+            // Attach event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-calculation').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const index = event.target.getAttribute('data-index');
+                    editCalculation(index);
+                });
+            });
+
+            document.querySelectorAll('.delete-calculation').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const index = event.target.getAttribute('data-index');
+                    deleteCalculation(index);
+                });
             });
 
             calculateTotalCost();
