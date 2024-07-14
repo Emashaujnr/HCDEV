@@ -543,19 +543,19 @@
                             <input type="text" id="ref-capacity-${index}" name="ref-capacity" value="${item.hvacDetails?.refCapacity || ''}">
 
                             <h3>Rack Frame Selections</h3>
-                            <label for="frame-model-${index}">Sheet Metal Type (SS/GAL/AL)</label>
+                            <label for="frame-model-${index}">Sheet Metal Type (SS/GAL)</label>
                             <select id="frame-model-${index}" name="frame-model">
                                 <option value="">Select</option>
                                 <option value="SS" ${item.hvacDetails?.frameModel === 'SS' ? 'selected' : ''}>SS</option>
                                 <option value="Gal" ${item.hvacDetails?.frameModel === 'Gal' ? 'selected' : ''}>GAL</option>
-                                <option value="AL" ${item.hvacDetails?.frameModel === 'AL' ? 'selected' : ''}>AL</option>
+                              
                             </select>
 
-                            <label for="frame-type-${index}">Frame Model Selection Galv or Double</label>
+                            <label for="frame-type-${index}">Frame Model Selection Single or Double</label>
                             <select id="frame-type-${index}" name="frame-type">
                                 <option value="">Select</option>
-                                <option value="Single-SS" ${item.hvacDetails?.frameType === 'Single-SS' ? 'selected' : ''}>Single SS</option>
-                                <option value="Single-Galv" ${item.hvacDetails?.frameType === 'Single-Galv' ? 'selected' : ''}>Single Galv</option>
+                                <option value="Single" ${item.hvacDetails?.frameType === 'Single' ? 'selected' : ''}>Single</option>
+                               
                                 <option value="Double" ${item.hvacDetails?.frameType === 'Double' ? 'selected' : ''}>Double</option>
                             </select>
 
