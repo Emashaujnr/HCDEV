@@ -234,30 +234,40 @@
             calculations.forEach((calc, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                  <tr>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            </tr> <tr>
-                            <td>Model: VPL-CS10K7ME-PFZ-1A30</td>
-                            </tr> <tr>
-                            <td>Price: R50311.01</td>
-                            </tr> <tr>
-                            <td>Quantity: 1</td>
-                            </tr> <tr>
-                            <td>Total: R50311.01</td>   
+                         <tr>
+    ${index + 1}
+</tr>
+<hr>
+<tr>
+    Quantity: ${calc.qty}
+</tr>
+<hr>
+<tr>
+    X: ${calc.x}
+</tr>
+<hr.
+<tr>
+    Y: ${calc.y}
+</tr>
+<hr>
+<tr>
+    Sheet Name: ${calc.sheetCostName}
+</tr>
+<hr>
+<tr>
+    Paint: ${calc.paint ? 'Yes' : 'No'}
+</tr>
+<hr>
+<tr>
+    Total Cost: R${calc.totalCost}
+</tr>
+<hr>
+<tr>
+    <button class="edit-calculation" data-index="${index}">Edit</button>
+    <button class="delete-calculation" data-index="${index}">Delete</button>
+    <button class="preview-calculation" onclick="previewCalculation(${index})">Preview</button>
+</tr>
 
-                        </tr>
-                        <tr>
-                        <td>
-                                <button class="edit-calculation" data-index="0">Edit</button>
-                                <button class="save-calculation" data-index="0" style="display: none;">Save</button>
-                                <button class="cancel-edit" data-index="0" style="display: none;">Cancel</button>
-                                <button class="delete-calculation" data-index="0">Delete</button>
-                                <button class="prf-details" data-index="0">PRF</button>
-                                  <button class="delete-calculationn"><a href="./path/to/pdf21.pdf" target="_blank" class="bom-link">BOM</a></button>
-                            </td>
-                        </tr>
                 `;
                 tableBody.appendChild(row);
             });
